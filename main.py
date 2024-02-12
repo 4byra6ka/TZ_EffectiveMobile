@@ -4,10 +4,9 @@ from src.phonebook import Phonebook
 
 
 def user_interaction():
+    """ Пользовательский CLI интерфейс"""
     print("Телефонный справочник\n")
     pb = Phonebook()
-    # pb.add("Grishanov", "andrey", "Urevich", "tpk", "+7495158745", "+79687310767")
-    # pb.add("test", "test", "test", "test", "+test", "+test")
     while True:
         text_menu_query = {
             1: "Вывод записей из справочника",
@@ -44,8 +43,11 @@ def user_interaction():
                             edit_contact.personal_phone = input(f"Изменить значение {edit_contact.personal_phone} на:")
                             pb.save_db_to_file()
                             print("Контакт изменён")
+                            break
                         elif position_posmenu_nam == "2":
                             print(pb.delete(int(input("Введите позицию для удаления:")) - 1))
+                            pb.save_db_to_file()
+                            break
                         elif position_posmenu_nam == "3":
                             break
                 print("\n")
@@ -61,7 +63,19 @@ def user_interaction():
                 print("\nКонтакт добавлен\n")
                 continue
             elif int(position_nam) == 3:
-                pass
+                print("Поиск по одному или нескольким значениям:")
+                print("!!!Если значение не будет введено то по этому полю искаться не будет!!!")
+                last_name = input("Поиск по фамилии:")
+                first_name = input("Поиск по имени:")
+                patronymic = input("Поиск по отчеству:")
+                organization_name = input("Поиск по названию организации:")
+                business_phone = input("Поиск по рабочему телефону :")
+                personal_phone = input("Поиск по личному телефону(сотовый):")
+                search = pb.search(last_name, first_name, patronymic, organization_name, business_phone, personal_phone)
+
+                [print(f"{'*'*100}\n{one_search}") for one_search in search]
+                print(f"{'*' * 100}\n")
+
                 continue
             if int(position_nam) == 4:
                 break

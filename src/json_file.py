@@ -6,6 +6,7 @@ from src.contact import Contact
 
 class JsonFile:
     def __init__(self, file_name: str = 'phonebook.json') -> None:
+        """ Инициализация класса JsonFile """
         self.file_name = file_name
         self.db: list = []
         self.check_file()
@@ -18,6 +19,7 @@ class JsonFile:
                 json.dump([], w_file, indent=2)
 
     def load(self) -> None:
+        """ Загрузка данных с файла Json в экземпляр класса Phonebook """
         with open(self.file_name, 'r', encoding='utf-8') as rfile:
             data = rfile.read()
             if not data == '':
@@ -26,6 +28,7 @@ class JsonFile:
                     self.db.append(Contact(**contact))
 
     def save(self, data: dict) -> None:
+        """ Добавление экземпляра класса Contact в файл Json """
         with open(self.file_name, 'r', encoding='utf-8') as rfile:
             text = rfile.read()
             if not text == '':
@@ -37,6 +40,7 @@ class JsonFile:
             json.dump(old_data, w_file, indent=2, ensure_ascii=False)
 
     def save_db_to_file(self) -> None:
+        """ Сохранение базы контактов с экземпляра класса Phonebook в файл Json """
         data = []
         for contact in self.db:
             data.append({
